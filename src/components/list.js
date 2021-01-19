@@ -5,7 +5,13 @@
   orientation: 'HORIZONTAL',
   jsx: (() => {
     const { List, ListItem, ListItemText } = window.MaterialUI.Core;
-    const { env, ModelProvider, useAllQuery, getProperty } = B;
+    const {
+      env,
+      getProperty,
+      InteractionScope,
+      ModelProvider,
+      useAllQuery,
+    } = B;
     const isDev = env === 'dev';
     const isEmpty = children.length === 0;
     const isPristine = children.length === 0 && isDev;
@@ -63,7 +69,7 @@
       }
       return (results || []).map(value => (
         <ModelProvider value={value} id={model}>
-          <B.InteractionScope>{children}</B.InteractionScope>
+          <InteractionScope>{children}</InteractionScope>
         </ModelProvider>
       ));
     };
@@ -79,7 +85,8 @@
     );
   })(),
   styles: B => t => {
-    const style = new B.Styling(t);
+    const { Styling } = B;
+    const style = new Styling(t);
     return {
       root: {
         backgroundColor: ({ options: { backgroundColor } }) =>
